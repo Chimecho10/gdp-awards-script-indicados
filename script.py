@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from functions import count_votes, treat_nominees, treat_nominees_no_limit
+from image_generator import generate_image_nominees
 
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
@@ -26,7 +27,6 @@ for column in dados:
         linha = linha.split(", ")
         for nome in linha:
             count_votes(votes, nome)
-
 
     most_voted = max(votes.values())
     limit = math.trunc(most_voted/div_number)
@@ -64,8 +64,14 @@ nominees[duplas] = [
 ]
 treat_nominees(duplas, nominees, 3)
 
-path = Path(config['json_path'])
-path = Path(path/'nominees.json')
+items = list(nominees.items())
+items[-2], items[-1] = items[-1], items[-2]
+nominees = dict(items)
+
+path_config = Path(config['output_path'])
+path = Path(path_config/'nominees.json')
+
+generate_image_nominees(nominees, path_config)
 
 with open(path, "w", encoding="utf-8") as file:
     json.dump(nominees, file, indent=4)
