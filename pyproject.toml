@@ -1,0 +1,20 @@
+[project]
+name = "gdp-awards"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { email = "fsamuelc.u@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pandas>=3.1.0",
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+gdp-awards = "gdp_awards:main"
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
