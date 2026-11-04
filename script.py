@@ -4,8 +4,8 @@ import math
 import json
 from pathlib import Path
 
-from functions import count_votes, treat_nominees, treat_nominees_no_limit
-from image_generator import generate_image_nominees
+from functions import count_votes, treat_nominees
+from slide_generator import generate_slides_nominees
 
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
@@ -45,7 +45,6 @@ for column in dados:
             [contender, total]
             for contender, total in votes_in_order.items()
         ]
-
         treat_nominees(column, nominees, 3)
 
 #Contando votos da categoria de Duplas
@@ -71,7 +70,7 @@ nominees = dict(items)
 path_config = Path(config['output_path'])
 path = Path(path_config/'nominees.json')
 
-generate_image_nominees(nominees, path_config)
-
 with open(path, "w", encoding="utf-8") as file:
     json.dump(nominees, file, indent=4)
+
+generate_slides_nominees(nominees, path_config)
